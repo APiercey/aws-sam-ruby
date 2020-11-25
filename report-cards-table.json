@@ -1,0 +1,13 @@
+{
+    "TableName": "report_cards",
+    "KeySchema": [
+      { "AttributeName": "report_card_id", "KeyType": "HASH" }
+    ],
+    "AttributeDefinitions": [
+      { "AttributeName": "report_card_id", "AttributeType": "S" }
+    ],
+    "ProvisionedThroughput": {
+      "ReadCapacityUnits": 5,
+      "WriteCapacityUnits": 5
+    }
+}

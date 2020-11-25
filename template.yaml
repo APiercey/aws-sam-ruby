@@ -1,0 +1,62 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Small RESTful application to explore AWS SAM.
+
+  Create report cards and retreive them from the API! Uses DynamoDB as a datastore
+
+Globals:
+  Function:
+    Timeout: 100
+
+Resources:
+  AllReportCardsFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: report_cards/
+      Handler: all.lambda_handler
+      Runtime: ruby2.7
+      Events:
+        AllReportCards:
+          Type: Api 
+          Properties:
+            Path: /report_cards
+            Method: get
+
+  FetchReportCardFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: report_cards/
+      Handler: fetch.lambda_handler
+      Runtime: ruby2.7
+      Events:
+        FetchReportCard:
+          Type: Api 
+          Properties:
+            Path: /report_cards/{report_card_id}
+            Method: get
+
+  CreateReportCardFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: report_cards/
+      Handler: create.lambda_handler
+      Runtime: ruby2.7
+      Events:
+        CreateReportCard:
+          Type: Api 
+          Properties:
+            Path: /report_cards
+            Method: post
+
+    ReportCardTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: report_cards
+        AttributeDefinitions:
+          - AttributeName: report_card_id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: report_card_id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
