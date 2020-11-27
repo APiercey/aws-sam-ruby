@@ -3,7 +3,7 @@ require_relative 'report_card'
 
 class ReportCardRepo
   def initialize
-    Aws.config.update({endpoint: "http://dynamodb:8000"})
+    # Aws.config.update({endpoint: "http://dynamodb:8000"})
 
     @client = Aws::DynamoDB::Client.new
   end

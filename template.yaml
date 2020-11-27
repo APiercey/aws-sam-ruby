@@ -16,6 +16,7 @@ Resources:
       CodeUri: report_cards/
       Handler: all.lambda_handler
       Runtime: ruby2.7
+      Policies: AmazonDynamoDBFullAccess
       Events:
         AllReportCards:
           Type: Api 
@@ -29,6 +30,7 @@ Resources:
       CodeUri: report_cards/
       Handler: fetch.lambda_handler
       Runtime: ruby2.7
+      Policies: AmazonDynamoDBFullAccess
       Events:
         FetchReportCard:
           Type: Api 
@@ -42,6 +44,7 @@ Resources:
       CodeUri: report_cards/
       Handler: create.lambda_handler
       Runtime: ruby2.7
+      Policies: AmazonDynamoDBFullAccess
       Events:
         CreateReportCard:
           Type: Api 
@@ -49,14 +52,14 @@ Resources:
             Path: /report_cards
             Method: post
 
-    ReportCardTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: report_cards
-        AttributeDefinitions:
-          - AttributeName: report_card_id
-            AttributeType: S
-        KeySchema:
-          - AttributeName: report_card_id
-            KeyType: HASH
-        BillingMode: PAY_PER_REQUEST
+  ReportCardTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: report_cards
+      AttributeDefinitions:
+        - AttributeName: report_card_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: report_card_id
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
