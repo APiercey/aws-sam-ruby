@@ -3,7 +3,7 @@ require_relative 'report_card'
 
 class ReportCardRepo
   def initialize
-    # Aws.config.update({endpoint: "http://dynamodb:8000"})
+    Aws.config.update({endpoint: "http://dynamodb:8000"})
 
     @client = Aws::DynamoDB::Client.new
   end
@@ -27,8 +27,9 @@ class ReportCardRepo
   end
 
   def fetch(id)
-    resp = client.get_item({table_name: "report_cards",
-                            key: { report_card_id: id }})
+    resp = client.get_item({table_name: "report_cards", key: { report_card_id: id }})
+
+    return nil if resp.item.nil?
 
     to_report_card(resp.item)
   end
